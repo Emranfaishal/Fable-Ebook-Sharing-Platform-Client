@@ -31,7 +31,7 @@ const WriterBooks = async () => {
             {/* 📊 Main Table Layout */}
             {!books || books.length === 0 ? (
                 <div className="bg-[#0B0F17] border border-gray-800 rounded-2xl p-10 text-center text-gray-400">
-                    You haven't added any books yet or ID mismatched.
+                    You havenot added any books yet or ID mismatched.
                 </div>
             ) : (
                 <div className="bg-[#0B0F17] border border-gray-800/60 rounded-2xl p-6 shadow-xl overflow-hidden">

@@ -9,17 +9,17 @@ import Image from "next/image";
 const ROLES = ["user", "writer", "admin"];
 
 const ROLE_STYLES = {
-  admin:  { badge: "bg-amber-400/10  text-amber-400  border-amber-400/25",   item: "text-amber-400  hover:bg-amber-400/10"  },
+  admin: { badge: "bg-amber-400/10  text-amber-400  border-amber-400/25", item: "text-amber-400  hover:bg-amber-400/10" },
   writer: { badge: "bg-violet-400/10 text-violet-400 border-violet-400/25", item: "text-violet-400 hover:bg-violet-400/10" },
-  user:   { badge: "bg-blue-400/10   text-blue-400   border-blue-400/25",   item: "text-blue-400   hover:bg-blue-400/10"   },
+  user: { badge: "bg-blue-400/10   text-blue-400   border-blue-400/25", item: "text-blue-400   hover:bg-blue-400/10" },
 };
 
 const TABLE_COLS = ["User", "Email", "Role", "Joined", "Actions"];
-const API        = process.env.NEXT_PUBLIC_URL;
+const API = process.env.NEXT_PUBLIC_URL;
 
 
 
-const getId      = (user) => user._id?.$oid || user._id?.toString() || user._id;
+const getId = (user) => user._id?.$oid || user._id?.toString() || user._id;
 const formatDate = (raw) => {
   const str = raw?.$date || raw;
   if (!str) return "N/A";
@@ -99,14 +99,14 @@ function RoleDropdown({ currentRole, userId, onRoleChange, isUpdating }) {
                 <h3 className="text-sm font-bold text-[#F0F4FF]">Change User Role</h3>
                 <p className="text-[11px] text-[#8892A4]">Select a new privilege for this user</p>
               </div>
-              <button 
+              <button
                 onClick={() => setOpen(false)}
                 className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/10 text-gray-400"
               >
                 <Xmark className="w-4 h-4" />
               </button>
             </div>
-            
+
             <div className="space-y-1.5">
               {ROLES.map((role) => (
                 <button
@@ -134,7 +134,9 @@ function RoleDropdown({ currentRole, userId, onRoleChange, isUpdating }) {
 // ── Main Component ─────────────────────────────────────────────────────────────
 
 export default function UsersTableClient({ initialUsers }) {
-  const [users, setUsers]           = useState(initialUsers || []);
+  const [users, setUsers] = useState(
+    Array.isArray(initialUsers) ? initialUsers : []
+  );
   const [deletingId, setDeletingId] = useState(null);
   const [roleUpdatingId, setRoleUpdatingId] = useState(null);
 
@@ -219,7 +221,7 @@ export default function UsersTableClient({ initialUsers }) {
 
                 return (
                   <tr key={id} className="border-b border-white/[0.04] last:border-0 transition-colors hover:bg-white/[0.02]">
-                    
+
                     {/* User Profile */}
                     <td className="px-4 sm:px-6 py-4">
                       <div className="flex items-center gap-3">
@@ -249,10 +251,10 @@ export default function UsersTableClient({ initialUsers }) {
 
                     {/* Role Dropdown */}
                     <td className="px-4 sm:px-6 py-4">
-                      <RoleDropdown 
-                        currentRole={user.role || "user"} 
-                        userId={id} 
-                        onRoleChange={handleRoleChange} 
+                      <RoleDropdown
+                        currentRole={user.role || "user"}
+                        userId={id}
+                        onRoleChange={handleRoleChange}
                         isUpdating={isRoleUpdating}
                       />
                     </td>

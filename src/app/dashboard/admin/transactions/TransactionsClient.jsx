@@ -1,19 +1,23 @@
 "use client";
 
 import React, { useState } from 'react'; // 👈 useState ইমপোর্ট করা হলো
-import { 
-  BsBagCheck, 
-  BsGrid3X3Gap, 
-  BsThreeDotsVertical, 
-  BsDownload, 
+import {
+  BsBagCheck,
+  BsGrid3X3Gap,
+  BsThreeDotsVertical,
+  BsDownload,
   BsArrowRightCircleFill
 } from "react-icons/bs";
 
 export default function TransactionsClient({ payments = [], writersPayment = [] }) {
-  
+
+  payments = Array.isArray(payments) ? payments : [];
+  writersPayment = Array.isArray(writersPayment) ? writersPayment : [];
+
+
   // ── 🔍 ফিল্টারিং স্টেট ──
   // 'all' = সব দেখাবে, 'purchase' = শুধু বই কেনা, 'creator' = শুধু ক্রিয়েটর পাস
-  const [filter, setFilter] = useState('all'); 
+  const [filter, setFilter] = useState('all');
 
   // ── 📊 ক্যালকুলেশনের জন্য প্রাথমিক ভেরিয়েবল ──
   let purchasePaymentsTotal = 0;
@@ -65,7 +69,7 @@ export default function TransactionsClient({ payments = [], writersPayment = [] 
 
   return (
     <div className="min-h-screen bg-[#0E1420] text-gray-100 p-4">
-      
+
       {/* 📝 Top Bar */}
       <div className="flex justify-between items-center mb-6">
         <div>
@@ -117,19 +121,19 @@ export default function TransactionsClient({ payments = [], writersPayment = [] 
 
       {/* 👑 ফিল্টারিং ট্যাব বাটনস */}
       <div className="flex gap-2 mb-4 bg-[#0B0F17] p-1 rounded-xl w-fit border border-white/5">
-        <button 
+        <button
           onClick={() => setFilter('all')}
           className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${filter === 'all' ? 'bg-amber-500 text-black' : 'text-gray-400 hover:text-white'}`}
         >
           All Logs ({allTransactions.length})
         </button>
-        <button 
+        <button
           onClick={() => setFilter('purchase')}
           className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${filter === 'purchase' ? 'bg-purple-500 text-white' : 'text-gray-400 hover:text-white'}`}
         >
           Book Purchases ({cleanPurchases.length})
         </button>
-        <button 
+        <button
           onClick={() => setFilter('creator')}
           className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${filter === 'creator' ? 'bg-emerald-500 text-white' : 'text-gray-400 hover:text-white'}`}
         >
@@ -155,10 +159,10 @@ export default function TransactionsClient({ payments = [], writersPayment = [] 
             {/* 💡 এখানে মাস্টার অ্যারের বদলে ফিল্টার করা অ্যারে (filteredTransactions) ম্যাপ করা হয়েছে */}
             {filteredTransactions.map((item, idx) => {
               const isPurchase = item.type === "Purchase";
-              const dateString = new Date(item.date).toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric', 
-                year: 'numeric' 
+              const dateString = new Date(item.date).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
               });
 
               return (

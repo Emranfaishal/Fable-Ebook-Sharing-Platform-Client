@@ -8,6 +8,7 @@ const baseUrl = process.env.NEXT_PUBLIC_URL;
 export const clientFetch = async (path) => {
     const { data: tokenData } = await authClient.token();
     const token = tokenData?.token;
+    console.log(token);
 
     const res = await fetch(`${baseUrl}${path}`, {
         headers: {
